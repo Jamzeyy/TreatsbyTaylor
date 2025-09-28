@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sweet Ring Donuts</title>
+    <meta name="description" content="Fresh, handcrafted donuts daily. Order online or stop by!" />
+    <style>
+      :root {
+        /* Graeter’s-inspired with girly pink twist */
+        --bg: #fff9fb;           /* very light pink */
+        --surface: #ffffff;      /* cards */
+        --text: #2a0e1b;         /* deep maroon-brown for legibility */
+        --muted: #7a4a5c;        /* muted maroon */
+        --brand: #6b1b2a;        /* heritage maroon */
+        --accent: #e91e63;       /* bold pink */
+        --accent-2: #ff6ea8;     /* bright pink */
+        --badge: #fce7f3;        /* pale pink */
+        --ring: rgba(233, 30, 99, 0.25);
+        --shadow: 0 12px 28px rgba(107, 27, 42, 0.10);
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1100px, 92%);
+        margin: 0 auto;
+      }
+
+      /* Header */
+      /* Skip link */
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .skip-link:focus {
+        position: fixed;
+        left: 16px;
+        top: 12px;
+        width: auto;
+        height: auto;
+        padding: 8px 12px;
+        background: #fff;
+        color: var(--brand);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        z-index: 999;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: #ffffffcc;
+        backdrop-filter: saturate(140%) blur(10px);
+        border-bottom: 1px solid rgba(107, 27, 42, 0.10);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        color: var(--brand);
+      }
+
+      .brand-badge {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 65% 35%, #ffd1e1 0%, #ffb7cf 35%, #ff8ab2 70%, #ff6ea8 100%);
+        box-shadow: inset 0 0 0 8px #fff, 0 8px 20px rgba(233, 30, 99, 0.28);
+        font-size: 18px;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 18px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav a {
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: var(--brand);
+      }
+
+      nav a:hover {
+        background: #fde7ef;
+      }
+
+      .cta {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+        font-weight: 700;
+        box-shadow: 0 10px 20px rgba(233, 30, 99, 0.22);
+      }
+
+      .cta:hover { filter: brightness(1.03); }
+
+      /* Hero */
+      .utility-bar {
+        background: #faf0f4;
+        border-bottom: 1px solid #f5d7e3;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .utility-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0;
+      }
+      .utility-links { display: flex; gap: 16px; }
+      .utility-links a { color: var(--muted); }
+
+      .hero {
+        position: relative;
+        padding: 64px 0 40px;
+        overflow: hidden;
+        background:
+          radial-gradient(1200px 400px at 80% -200px, rgba(233, 30, 99, 0.18), transparent 60%),
+          radial-gradient(900px 350px at -100px 50%, rgba(255, 110, 168, 0.18), transparent 60%);
+      }
+
+      .hero-grid { display: grid; gap: 16px; grid-template-columns: 2fr 1fr; align-items: stretch; }
+      .promo {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 16px;
+      }
+      .promo-card {
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px;
+        border: 1px solid #f5d7e3;
+      }
+
+      .hero h1 { font-size: clamp(32px, 6vw, 52px); line-height: 1.08; margin: 0 0 12px; letter-spacing: -0.02em; color: var(--brand); }
+
+      .hero p {
+        margin: 0 0 22px;
+        color: var(--muted);
+        font-size: clamp(16px, 2.3vw, 18px);
+      }
+
+      .hero-card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; display: grid; gap: 12px; border: 1px solid #f5d7e3; }
+
+      .donut-rows {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .donut { background: linear-gradient(180deg, #fff0f6, #fff 60%); border-radius: 14px; padding: 14px; display: grid; place-items: center; border: 1px solid #f5d7e3; }
+
+      .donut span { font-size: 28px; }
+
+      /* Sections */
+      section { padding: 40px 0; }
+      section h2 { margin: 0 0 14px; font-size: 28px; }
+      section p.lead { margin: 0 0 14px; color: var(--muted); }
+
+      /* Menu grid */
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+      .card { background: var(--surface); border: 1px solid #f5d7e3; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+
+      .card .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .price { font-weight: 800; color: var(--brand); background: #fde7ef; border-radius: 999px; padding: 4px 10px; font-size: 14px; }
+
+      .tag { display: inline-block; font-size: 12px; color: var(--brand); background: var(--badge); padding: 2px 8px; border-radius: 999px; border: 1px solid #f5d7e3; }
+
+      /* Order form */
+      form {
+        display: grid;
+        gap: 14px;
+        margin-top: 10px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      label { font-weight: 600; font-size: 14px; }
+
+      input, select, textarea {
+        width: 100%;
+        padding: 12px 12px;
+        border: 1px solid #f1c9d8;
+        border-radius: 10px;
+        background: #fff;
+        font: inherit;
+      }
+
+      input:focus, select:focus, textarea:focus {
+        outline: 3px solid var(--ring);
+        border-color: var(--accent);
+      }
+
+      .order-items {
+        display: grid;
+        gap: 10px;
+      }
+
+      .order-item {
+        display: grid;
+        grid-template-columns: 1fr 90px;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .submit {
+        justify-self: start;
+        border: 0;
+        cursor: pointer;
+      }
+
+      /* Footer */
+      footer { padding: 32px 0 48px; color: var(--muted); }
+      .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .footer-col strong { color: var(--brand); }
+      .footer-col a { color: var(--muted); display: block; padding: 4px 0; }
+
+      /* Responsive */
+      @media (max-width: 920px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .promo { grid-template-columns: 1fr; }
+        .donut-rows { grid-template-columns: repeat(6, 1fr); }
+        .grid { grid-template-columns: repeat(2, 1fr); }
+        .row { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      @media (max-width: 620px) {
+        nav ul { display: none; }
+        .grid { grid-template-columns: 1fr; }
+        .donut-rows { grid-template-columns: repeat(3, 1fr); }
+        .footer-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#home" class="skip-link">Skip to content</a>
+    <div class="utility-bar" aria-label="Site utility">
+      <div class="container utility-row">
+        <div>Sign up for sweet news and seasonal drops</div>
+        <div class="utility-links">
+          <a href="#login">Login</a>
+          <a href="#cart">Cart (0)</a>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="container nav">
+        <a href="#home" class="brand" aria-label="Sweet Ring Donuts home">
+          <span class="brand-badge" aria-hidden="true">🍩</span>
+          <span>Sweet Ring Donuts</span>
+        </a>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#order" class="cta">Order Now</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="promo">
+            <div class="promo-card">
+              <h1>Signature Pink Dozen</h1>
+              <p class="lead">Create a pack of 6 or 12 with our classic and seasonal favorites.</p>
+              <a class="cta" href="#order">Create a pack</a>
+            </div>
+            <div class="promo-card">
+              <strong>Limited Edition</strong>
+              <p class="lead">Rose Raspberry Swirl — blooming with flavor this month only.</p>
+              <a class="cta" href="#menu">See flavor</a>
+            </div>
+          </div>
+          <div class="hero-card" aria-labelledby="best-sellers">
+            <div class="top" style="display:flex;justify-content:space-between;align-items:center;">
+              <strong id="best-sellers">Today’s best sellers</strong>
+              <span class="tag">Baked at 5am</span>
+            </div>
+            <div class="donut-rows" role="list" aria-label="Popular donuts">
+              <div class="donut" role="listitem" aria-label="Glazed donut"><span>🍩</span></div>
+              <div class="donut" role="listitem" aria-label="Chocolate dipped"><span>🍫</span></div>
+              <div class="donut" role="listitem" aria-label="Strawberry sprinkle"><span>🍓</span></div>
+              <div class="donut" role="listitem" aria-label="Matcha ring"><span>🍵</span></div>
+              <div class="donut" role="listitem" aria-label="Cinnamon sugar"><span>🍂</span></div>
+              <div class="donut" role="listitem" aria-label="Maple pecan"><span>🧈</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="menu" aria-labelledby="menu-heading">
+        <div class="container">
+          <h2 id="menu-heading">Menu</h2>
+          <p class="lead">A rotating selection of classics and seasonal flavors.</p>
+          <div class="grid">
+            <article class="card" aria-labelledby="glazed-h">
+              <div class="top">
+                <strong id="glazed-h">Classic Glazed</strong>
+                <span class="price">$2.25</span>
+              </div>
+              <p>Feather-light yeast donut with a vanilla bean glaze.</p>
+              <span class="tag">GF</span>
+            </article>
+
+            <article class="card" aria-labelledby="choc-h">
+              <div class="top">
+                <strong id="choc-h">Chocolate Dipped</strong>
+                <span class="price">$2.75</span>
+              </div>
+              <p>Rich cocoa coating over a soft, airy ring.</p>
+              <span class="tag">Signature</span>
+            </article>
+
+            <article class="card" aria-labelledby="sprinkle-h">
+              <div class="top">
+                <strong id="sprinkle-h">Strawberry Sprinkle</strong>
+                <span class="price">$2.95</span>
+              </div>
+              <p>Real strawberry glaze with rainbow sprinkles.</p>
+              <span class="tag">Limited Edition</span>
+            </article>
+
+            <article class="card" aria-labelledby="boston-h">
+              <div class="top">
+                <strong id="boston-h">Boston Cream</strong>
+                <span class="price">$3.25</span>
+              </div>
+              <p>Custard-filled with a glossy chocolate top.</p>
+              <span class="tag">Best Seller</span>
+            </article>
+
+            <article class="card" aria-labelledby="matcha-h">
+              <div class="top">
+                <strong id="matcha-h">Matcha Ring</strong>
+                <span class="price">$3.10</span>
+              </div>
+              <p>Earthy ceremonial matcha glaze; lightly sweet.</p>
+              <span class="tag">V</span>
+            </article>
+
+            <article class="card" aria-labelledby="cinnamon-h">
+              <div class="top">
+                <strong id="cinnamon-h">Cinnamon Sugar</strong>
+                <span class="price">$2.50</span>
+              </div>
+              <p>Warm cinnamon and fine sugar on a cake donut.</p>
+              <span class="tag">DF</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" aria-labelledby="about-heading">
+        <div class="container">
+          <h2 id="about-heading">About</h2>
+          <p class="lead">We’re a small, family-run shop making donuts the old-fashioned way — with patience, care, and great ingredients.</p>
+          <div class="grid" style="grid-template-columns: 2fr 1fr;">
+            <div class="card">
+              <strong>Our story</strong>
+              <p>What started as late-night experiments in our home kitchen turned into a neighborhood favorite. From classic glazed to playful seasonal flavors, every donut is mixed, proofed, and glazed by hand each morning.</p>
+            </div>
+            <div class="card">
+              <strong>Visit us</strong>
+              <p>
+                123 Sweet Street, Donutville<br />
+                Open daily: 7:00am – 2:00pm
+              </p>
+              <span class="tag">Limited batches — sell out by noon!</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="order" aria-labelledby="order-heading">
+        <div class="container">
+          <h2 id="order-heading">Order pickup</h2>
+          <p class="lead">Place a pickup request. We’ll text when it’s ready.</p>
+          <form action="#" method="post">
+            <div class="row">
+              <div>
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" placeholder="Jane Donut" required />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="time">Pickup time</label>
+                <select id="time" name="time" required>
+                  <option value="" disabled selected>Select a time</option>
+                  <option>8:00 AM</option>
+                  <option>9:00 AM</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>12:00 PM</option>
+                </select>
+              </div>
+              <div>
+                <label for="dozen">Box size</label>
+                <select id="dozen" name="box">
+                  <option>Single</option>
+                  <option>Half dozen (6)</option>
+                  <option>Dozen (12)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card">
+              <strong style="display:block; margin-bottom:8px;">Choose your donuts</strong>
+              <div class="order-items">
+                <div class="order-item">
+                  <label><input type="checkbox" name="items" value="glazed" /> Classic Glazed</label>
+                  <input type="number" name="qty_glazed" min="0" max="12" value="0" aria-label="Glazed quantity" />
+                </div>
+                <div class="order-item">
+                  <label><input type="checkbox" name="items" value="chocolate" /> Chocolate Dipped</label>
+                  <input type="number" name="qty_chocolate" min="0" max="12" value="0" aria-label="Chocolate quantity" />
+                </div>
+                <div class="order-item">
+                  <label><input type="checkbox" name="items" value="sprinkle" /> Strawberry Sprinkle</label>
+                  <input type="number" name="qty_sprinkle" min="0" max="12" value="0" aria-label="Sprinkle quantity" />
+                </div>
+                <div class="order-item">
+                  <label><input type="checkbox" name="items" value="boston" /> Boston Cream</label>
+                  <input type="number" name="qty_boston" min="0" max="12" value="0" aria-label="Boston Cream quantity" />
+                </div>
+                <div class="order-item">
+                  <label><input type="checkbox" name="items" value="matcha" /> Matcha Ring</label>
+                  <input type="number" name="qty_matcha" min="0" max="12" value="0" aria-label="Matcha quantity" />
+                </div>
+                <div class="order-item">
+                  <label><input type="checkbox" name="items" value="cinnamon" /> Cinnamon Sugar</label>
+                  <input type="number" name="qty_cinnamon" min="0" max="12" value="0" aria-label="Cinnamon quantity" />
+                </div>
+              </div>
+            </div>
+
+            <label for="notes">Notes (allergies, substitutions, etc.)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Anything we should know?"></textarea>
+
+            <button class="cta submit" type="submit">Request pickup</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-heading">
+        <div class="container">
+          <h2 id="contact-heading">Contact</h2>
+          <div class="grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="card">
+              <strong>Call or text</strong>
+              <p>(555) 987-6543</p>
+              <span class="tag">Best hours: 7am–12pm</span>
+            </div>
+            <div class="card">
+              <strong>Follow us</strong>
+              <p>
+                <a href="#">Instagram</a> · <a href="#">TikTok</a> · <a href="#">Facebook</a>
+              </p>
+              <span class="tag">Tag us: #SweetRingDonuts</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-grid">
+        <div class="footer-col">
+          <strong>Account</strong>
+          <a href="#login">Login</a>
+          <a href="#orders">Order History</a>
+          <a href="#gift-cards">Gift Cards</a>
+        </div>
+        <div class="footer-col">
+          <strong>Company</strong>
+          <a href="#about">About Us</a>
+          <a href="#careers">Careers</a>
+          <a href="#press">Press</a>
+        </div>
+        <div class="footer-col">
+          <strong>Support</strong>
+          <a href="#accessibility">Accessibility</a>
+          <a href="#contact">Contact</a>
+          <a href="#shipping">Shipping & FAQs</a>
+        </div>
+        <div class="footer-col">
+          <strong>Social</strong>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">Facebook</a>
+        </div>
+      </div>
+      <div class="container" style="margin-top:16px; text-align:center;">© <span id="year"></span> Sweet Ring Donuts — Baked with love.</div>
+    </footer>
+
+    <script>
+      // Set current year in footer
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+  </html>
+
+
